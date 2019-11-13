@@ -2,8 +2,8 @@
 ## Project: Access Control
 ### Author: Meron
 ### Links and Resources
-* [submission PR](http://xyz.com)
-* [travis](http://xyz.com)
+* [submission PR](https://github.com/meron-401n14/lab-13/pull/1)
+* [travis]()
 * [Heroku](https://lab-13app.herokuapp.com/)
 
 #### Documentation
