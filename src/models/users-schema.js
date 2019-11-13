@@ -3,6 +3,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const TOKEN_EXPIRE=process.env.TOKEN_LIFETIME || '7m';
 
 /**
  * The schema definition for a user record
@@ -43,6 +44,10 @@ users.pre('find', populateRoles);
 // === TODO: Implement a methods function can() which takes a string and returns true/false if
 // === the user has that capability ===
 
+users.methods.can = function (capability){
+  return populateRoles[this.role].includes(capability);
+};
+
 /**
  * Pre middleware which converts a string password into a hashed password before every save to MongoDB
  */
@@ -76,13 +81,16 @@ users.statics.authenticateBasic = async function(auth) {
 // === TODO implement timeout functionality for this token ====
 // === You can have your code pass generateToken a flag that ===
 // === sets a long or short (5 sec) timeout ===
-users.methods.generateToken = function() {
+users.methods.generateToken = function(type) {
   let secret = process.env.SECRET || 'this-is-my-secret';
   let data = {
     id: this._id,
   };
-
-  return jwt.sign(data, secret);
+  let options = {};
+  if(type !== 'key' && !!TOKEN_EXPIRE){
+    options = {expiresIn: TOKEN_EXPIRE};
+  }
+  return jwt.sign(data, secret, options);
 };
 
 /**

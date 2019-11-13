@@ -22,7 +22,9 @@ router.get('/public', (req, res, next) => {
  * @param {function} next
  * Visible by logged in clients only
  */
-router.get('/hidden', (req, res, next) => {});
+router.get('/hidden', (req, res, next) => {
+  
+});
 /**
  * @routes GET/read-only
  * @param {object} req
@@ -54,7 +56,15 @@ router.put('/update/:id', (req, res, next) => {});
  * @param {function} next
  * Accessible by roles that have the delete capability
  */
-router.delete('/delete/:id', (req, res, next) => {});
+router.delete('/delete/:id', (req, res, next) => {
+  const id= parseInt(req.params.id, 10);
+  const success = roles.delete(id);
+  if(success){
+    res.status(200).end();
+  }else {
+    res.status(404).end();
+  }
+});
 /**
  * @rotes GET /super
  * @param {object} req
