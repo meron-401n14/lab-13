@@ -23,8 +23,10 @@ router.get('/public', (req, res, next) => {
  * Visible by logged in clients only
  */
 router.get('/hidden', (req, res, next) => {
-  
+  res.send(req.body);
+
 });
+
 /**
  * @routes GET/read-only
  * @param {object} req
@@ -32,7 +34,9 @@ router.get('/hidden', (req, res, next) => {
  * @param {function} next
  * visible by roles that have the read capability
  */
-router.get('/read-only', (req, res, next) => {});
+router.get('/read-only', (req, res, next) => {
+  res.send(req.body);
+});
 /**
  * @routes POST /create
  * @param {object} req
